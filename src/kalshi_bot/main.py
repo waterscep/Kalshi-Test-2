@@ -7,6 +7,8 @@ import asyncio
 import signal
 import sys
 
+import logging
+
 import structlog
 
 
@@ -20,7 +22,7 @@ def setup_logging(level: str = "INFO") -> None:
             structlog.dev.ConsoleRenderer() if sys.stderr.isatty() else structlog.processors.JSONRenderer(),
         ],
         wrapper_class=structlog.make_filtering_bound_logger(
-            getattr(structlog, level.upper(), structlog.INFO)  # type: ignore[arg-type]
+            getattr(logging, level.upper(), logging.INFO)
         ),
         logger_factory=structlog.PrintLoggerFactory(),
     )
