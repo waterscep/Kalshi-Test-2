@@ -38,10 +38,11 @@ async def run(args: argparse.Namespace) -> None:
 
     engine = TradingEngine(settings)
 
-    # Handle graceful shutdown
-    loop = asyncio.get_running_loop()
-    for sig in (signal.SIGINT, signal.SIGTERM):
-        loop.add_signal_handler(sig, lambda: asyncio.create_task(engine.stop()))
+    # Handle graceful shutdown (not supported on Windows)
+    if sys.platform != "win32":
+        loop = asyncio.get_running_loop()
+        for sig in (signal.SIGINT, signal.SIGTERM):
+            loop.add_signal_handler(sig, lambda: asyncio.create_task(engine.stop()))
 
     await engine.start()
 
