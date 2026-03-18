@@ -50,6 +50,7 @@ class KalshiClient:
 
     def _auth_headers(self, method: str, path: str) -> dict[str, str]:
         headers = sign_request(self._private_key, method, path)
+        headers["Content-Type"] = "application/json"
         headers["KALSHI-ACCESS-KEY"] = self.api_key_id
         return headers
 
