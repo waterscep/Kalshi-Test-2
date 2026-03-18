@@ -32,7 +32,10 @@ class KalshiClient:
         self.settings = settings
         self.base_url = settings.kalshi_api_base.rstrip("/")
         self.api_key_id = settings.kalshi_api_key_id
-        self._private_key = load_private_key(settings.kalshi_private_key_path)
+        if settings.dry_run:
+            self._private_key = None  # type: ignore[assignment]
+        else:
+            self._private_key = load_private_key(settings.kalshi_private_key_path)
         self._client = httpx.AsyncClient(
             base_url=self.base_url,
             timeout=httpx.Timeout(30.0),
@@ -67,6 +70,9 @@ class KalshiClient:
         max_retries: int = 3,
     ) -> dict[str, Any]:
         """Make an authenticated API request with retries."""
+        if self.settings.dry_run and self._private_key is None:
+            log.debug("dry_run_skip_request", method=method, path=path)
+            return {}
         full_path = f"{API_BASE_PATH}{path}"
         headers = self._auth_headers(method, full_path)
 
