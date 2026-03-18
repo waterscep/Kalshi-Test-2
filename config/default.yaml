@@ -1,0 +1,23 @@
+strategy:
+  min_edge_cents: 3
+  kelly_fraction: 0.25
+  max_markets: 10
+  forecast_refresh_minutes: 30
+  tick_interval_seconds: 5
+  # Favorite-longshot bias adjustment (cents)
+  flb_favorite_bonus: 1    # add edge for contracts > 80c
+  flb_longshot_penalty: 1  # subtract edge for contracts < 20c
+
+risk:
+  max_position_per_market: 100
+  max_total_exposure: 5000
+  max_daily_loss: 500
+  max_event_concentration: 0.30
+  min_balance_reserve: 200
+  min_hours_to_close: 1
+
+weather:
+  cities: [NYC, CHI, MIA, AUS]
+  models: [gfs_seamless]
+  forecast_days: 7
+  cache_ttl_minutes: 30
