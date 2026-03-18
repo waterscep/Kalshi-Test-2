@@ -28,7 +28,7 @@ class Settings(BaseSettings):
     # --- API credentials ---
     kalshi_api_key_id: str = ""
     kalshi_private_key_path: Path = Path("private_key.pem")
-    kalshi_api_base: str = "https://trading-api.kalshi.com"
+    kalshi_api_base: str = "https://api.elections.kalshi.com"
     dry_run: bool = False
 
     # --- Strategy ---
