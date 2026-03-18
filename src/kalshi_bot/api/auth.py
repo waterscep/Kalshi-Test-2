@@ -35,13 +35,14 @@ def sign_request(
     if timestamp_ms is None:
         timestamp_ms = int(time.time() * 1000)
 
-    message = f"{timestamp_ms}{method.upper()}{path}".encode()
+    signing_path = path.split("?")[0]
+    message = f"{timestamp_ms}{method.upper()}{signing_path}".encode()
 
     signature = private_key.sign(
         message,
         padding.PSS(
             mgf=padding.MGF1(hashes.SHA256()),
-            salt_length=padding.PSS.MAX_LENGTH,
+            salt_length=padding.PSS.DIGEST_LENGTH,
         ),
         hashes.SHA256(),
     )

@@ -52,7 +52,33 @@ class TestSignRequest:
             message,
             padding.PSS(
                 mgf=padding.MGF1(hashes.SHA256()),
-                salt_length=padding.PSS.MAX_LENGTH,
+                salt_length=padding.PSS.DIGEST_LENGTH,
+            ),
+            hashes.SHA256(),
+        )
+
+    def test_query_params_stripped_from_signature(self):
+        """Query parameters should be stripped before signing."""
+        import base64
+        key = _generate_test_key()
+        pub = key.public_key()
+
+        ts = 1700000000000
+        method = "GET"
+        path_with_params = "/trade-api/v2/markets?status=open&limit=200"
+        path_without_params = "/trade-api/v2/markets"
+
+        headers = sign_request(key, method, path_with_params, timestamp_ms=ts)
+        sig = base64.b64decode(headers["KALSHI-ACCESS-SIGNATURE"])
+
+        # Signature should verify against path WITHOUT query params
+        message = f"{ts}{method.upper()}{path_without_params}".encode()
+        pub.verify(
+            sig,
+            message,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.DIGEST_LENGTH,
             ),
             hashes.SHA256(),
         )
