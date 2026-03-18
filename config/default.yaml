@@ -9,7 +9,7 @@ strategy:
   flb_longshot_penalty: 1  # subtract edge for contracts < 20c
 
 risk:
-  max_position_per_market: 100
+  max_position_per_market: 5
   max_total_exposure: 5000
   max_daily_loss: 500
   max_event_concentration: 0.30

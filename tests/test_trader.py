@@ -24,8 +24,8 @@ class TestKellyContracts:
 
     def test_larger_edge_produces_more_contracts(self):
         """More edge → more contracts."""
-        small = kelly_contracts(0.60, 50, 100_000)
-        large = kelly_contracts(0.80, 50, 100_000)
+        small = kelly_contracts(0.55, 50, 5_000)
+        large = kelly_contracts(0.70, 50, 5_000)
         assert large > small
 
     def test_respects_max_contracts(self):

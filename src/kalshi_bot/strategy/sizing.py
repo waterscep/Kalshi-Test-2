@@ -8,7 +8,7 @@ def kelly_contracts(
     market_price_cents: int,
     bankroll_cents: int,
     fraction: float = 0.25,
-    max_contracts: int = 100,
+    max_contracts: int = 5,
 ) -> int:
     """Compute optimal position size using fractional Kelly criterion.
 
@@ -63,7 +63,7 @@ def kelly_contracts_sell(
     market_price_cents: int,
     bankroll_cents: int,
     fraction: float = 0.25,
-    max_contracts: int = 100,
+    max_contracts: int = 5,
 ) -> int:
     """Kelly sizing for selling YES (shorting, betting on NO).
 

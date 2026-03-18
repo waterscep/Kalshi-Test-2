@@ -41,7 +41,7 @@ class Settings(BaseSettings):
     flb_longshot_penalty: int = _strategy.get("flb_longshot_penalty", 1)
 
     # --- Risk ---
-    max_position_per_market: int = _risk.get("max_position_per_market", 100)
+    max_position_per_market: int = _risk.get("max_position_per_market", 5)
     max_total_exposure: int = _risk.get("max_total_exposure", 5000)
     max_daily_loss: int = _risk.get("max_daily_loss", 500)
     max_event_concentration: float = _risk.get("max_event_concentration", 0.30)
